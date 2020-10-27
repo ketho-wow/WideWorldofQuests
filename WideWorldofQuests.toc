@@ -1,0 +1,10 @@
+## Interface: 900001
+## Version: @project-version@
+## Title: WideWorldofQuests
+## Notes: Keeps track of already completed unique world quests
+## Author: Ketho
+## SavedVariables: WideWorldofQuestsDB
+## X-Curse-Project-ID: 
+## X-WoWI-ID: 
+
+WideWorldofQuests.lua
