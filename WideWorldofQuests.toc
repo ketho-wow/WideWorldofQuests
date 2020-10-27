@@ -5,6 +5,6 @@
 ## Author: Ketho
 ## SavedVariables: WideWorldofQuestsDB
 ## X-Curse-Project-ID: 415926
-## X-WoWI-ID: 
+## X-WoWI-ID: 25754
 
 WideWorldofQuests.lua
