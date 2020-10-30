@@ -49,8 +49,10 @@ function f:QUEST_LOG_UPDATE()
 	if WorldMapFrame:IsVisible() and mapIds[WorldMapFrame:GetMapID()] then
 		for pin in WorldMapFrame:EnumerateAllPins() do
 			if db.quests[pin.questID] then
-				pin.Texture:SetVertexColor(.2, .2, .2)
-				pin.Background:SetVertexColor(0, 0, 0)
+				if pin.Texture and pin.Background then
+					pin.Texture:SetVertexColor(.2, .2, .2)
+					pin.Background:SetVertexColor(0, 0, 0)
+				end
 			else
 				if pin.Texture and pin.Background then
 					pin.Texture:SetVertexColor(1, 1, 1)
