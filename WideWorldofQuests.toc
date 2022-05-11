@@ -1,4 +1,4 @@
-## Interface: 90005
+## Interface: 90200
 ## Version: @project-version@
 ## Title: Wide World of Quests
 ## Notes: Keeps track of completed unique world quests

@@ -43,11 +43,10 @@ function f:QUEST_TURNED_IN(questID)
 	end
 end
 
--- WorldQuestDataProviderMixin:OnEvent() -> WorldQuestDataProviderMixin:RefreshAllData()
 -- this seems to work fine instead of hooking into the worldmap
 function f:QUEST_LOG_UPDATE()
 	if WorldMapFrame:IsVisible() and mapIds[WorldMapFrame:GetMapID()] then
-		for pin in WorldMapFrame:EnumerateAllPins() do
+		for pin in WorldMapFrame:EnumeratePinsByTemplate("WorldMap_WorldQuestPinTemplate") do
 			if db.quests[pin.questID] then
 				if pin.Texture then
 					pin.Texture:SetVertexColor(.2, .2, .2)
