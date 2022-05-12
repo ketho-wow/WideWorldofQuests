@@ -3,7 +3,6 @@ local f = CreateFrame("Frame")
 local WIDE_WORLD_OF_QUESTS = 13144
 
 local defaults = {
-	db_version = 1,
 	quests = {},
 }
 
@@ -18,10 +17,13 @@ local mapIds = {
 
 function f:ADDON_LOADED(addon)
 	if addon == "WideWorldofQuests" then
-		if not WideWorldofQuestsDB or WideWorldofQuestsDB.db_version < defaults.db_version then
-			WideWorldofQuestsDB = CopyTable(defaults)
+		WideWorldofQuestsDB = WideWorldofQuestsDB or {}
+		self.db = WideWorldofQuestsDB
+		for k, v in pairs(defaults) do
+			if self.db[k] == nil then
+				self.db[k] = v
+			end
 		end
-		db = WideWorldofQuestsDB
 		self:UnregisterEvent("ADDON_LOADED")
 	end
 end
@@ -43,26 +45,25 @@ function f:QUEST_TURNED_IN(questID)
 	end
 end
 
+local function SetPinColor(pin, r1, g1, b1, r2, g2, b2)
+	if pin.Texture then
+		pin.Texture:SetVertexColor(r1, g1, b1)
+	end
+	if pin.Background then
+		pin.Background:SetVertexColor(r2, g2, b2)
+	end
+end
+
 -- this seems to work fine instead of hooking into the worldmap
 function f:QUEST_LOG_UPDATE()
 	if WorldMapFrame:IsVisible() and mapIds[WorldMapFrame:GetMapID()] then
 		for pin in WorldMapFrame:EnumeratePinsByTemplate("WorldMap_WorldQuestPinTemplate") do
 			if db.quests[pin.questID] then
-				if pin.Texture then
-					pin.Texture:SetVertexColor(.2, .2, .2)
-				end
-				if pin.Background then
-					pin.Background:SetVertexColor(0, 0, 0)
-				end
+				SetPinColor(pin, .2, .2, .2, 0, 0, 0)
 				pin.wideworldofquests = true
 			else
 				if pin.wideworldofquests then -- restore pin
-					if pin.Texture then
-						pin.Texture:SetVertexColor(1, 1, 1)
-					end
-					if pin.Background then
-						pin.Background:SetVertexColor(1, 1, 1)
-					end
+					SetPinColor(pin, 1, 1, 1, 1, 1, 1)
 					pin.wideworldofquests = nil
 				end
 			end
